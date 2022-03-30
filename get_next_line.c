@@ -23,16 +23,16 @@ char	*next_line(char *buf)
 	a = 0;
 	while(buf[a] && buf[a] != '\n')
 		a++;
-		if (!buf[a])
-		{
-			free (buf);
-			return (NULL);
-		}
+	if (!buf[a])
+	{
+		free (buf);
+		return (NULL);
+	}
 	line = ft_calloc((ft_strlen(buf) - a + 1), sizeof(char));
 	a++;
 	b = 0;
-	while (buff[a])
-		line[b++] = buff[a++];
+	while (buf[a])
+		line[b++] = buf[a++];
 	return (line);
 }
 
@@ -44,7 +44,14 @@ char	*take_line(char *buff)
 	a = 0;
 	if (!buff[a])
 		return (NULL);
+	
 	while (buff[a] != '\n' && buff[a])
+		a++;
+
+	line = ft_calloc(a + 2, sizeof(char));
+	a = 0;
+	
+	while (buff[a] && buff[a] != '\n')
 	{
 		line[a] = buff[a];
 		a++;
@@ -54,7 +61,7 @@ char	*take_line(char *buff)
 	return (line);
 }
 
-char	*free_my_buff(char	*buf, char *buffer)
+char	*free_my_buff(char *buf, char *buffer)
 {
 	char	*temp;
 
@@ -82,7 +89,7 @@ char	*read_my_file(int fd, char *buf)
 			return(NULL);
 		}
 		buffer[n] = 0;
-		buf = join(buf, buffer);
+		buf = ft_strjoin(buf, buffer);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 
@@ -92,7 +99,7 @@ char	*read_my_file(int fd, char *buf)
 }
 char	*get_next_line(int fd)
 {
-	char static	*buf;
+	static char *buf;
 	char 		*line;
 
 	if(fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
