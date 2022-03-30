@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 20:00:35 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/04 20:00:35 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/30 13:15:30 by fmilheir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*next_line(char *buf)
 	b = 0;
 	while (buf[a])
 		line[b++] = buf[a++];
+	free (buf);
 	return (line);
 }
 
@@ -85,11 +86,11 @@ char	*read_my_file(int fd, char *buf)
 		n = read(fd, buffer, BUFFER_SIZE);
 		if (n == -1)
 		{
-			free(buffer);
-			return(NULL);
+			free (buffer);
+			return (NULL);
 		}
 		buffer[n] = 0;
-		buf = ft_strjoin(buf, buffer);
+		buf = free_my_buff(buf, buffer);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 
